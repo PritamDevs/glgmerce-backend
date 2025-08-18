@@ -8,12 +8,12 @@ dotenv.config()
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
 
-let buyerRoute = require('../Backend/routes/buyer.route')
-app.use('/api/buyer',buyerRoute)
-let sellerRoute = require('../Backend/routes/seller.route')
-app.use('/api/seller',sellerRoute)
-let productRoute = require('../Backend/routes/product.route')
-app.use('/api/product',productRoute)
+let buyerRoute = require('./routes/buyer.route')
+app.use('./api/buyer',buyerRoute)
+let sellerRoute = require('./routes/seller.route')
+app.use('./api/seller',sellerRoute)
+let productRoute = require('./routes/product.route')
+app.use('./api/product',productRoute)
 
 connectDB()
 .then(()=>{
