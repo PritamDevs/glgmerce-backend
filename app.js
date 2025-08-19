@@ -9,11 +9,11 @@ app.use(express.urlencoded({extended:true}))
 app.use(express.json())
 
 let buyerRoute = require('./routes/buyer.route')
-app.use('./api/buyer',buyerRoute)
+app.use('/api/buyer',buyerRoute)
 let sellerRoute = require('./routes/seller.route')
-app.use('./api/seller',sellerRoute)
+app.use('/api/seller',sellerRoute)
 let productRoute = require('./routes/product.route')
-app.use('./api/product',productRoute)
+app.use('/api/product',productRoute)
 
 connectDB()
 .then(()=>{
