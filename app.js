@@ -3,10 +3,15 @@ let dotenv=require('dotenv')
 let app=express()
 const connectDB = require('./config/db.config')
 dotenv.config()
+const cors =require('cors')
 
 //middleware
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
+app.use(cors({
+    origin:'*',
+}))
+
 
 let buyerRoute = require('./routes/buyer.route')
 app.use('/api/buyer',buyerRoute)
