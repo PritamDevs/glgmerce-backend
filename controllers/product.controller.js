@@ -17,7 +17,7 @@ module.exports.createProduct = async(req,res)=>{
             return res.status(201).json({message:"Product created successfully",success:true,product:newProduct});
         }
     } catch (error) {
-         return res.status(500).json({message:"Internal Server Error",status:false});
+         return res.status(500).json({message:"Internal Server Error",success:false});
     }
 
 }

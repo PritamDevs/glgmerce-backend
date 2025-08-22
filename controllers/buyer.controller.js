@@ -6,15 +6,15 @@ module.exports.login=async(req,res)=> {
    try{
     let{email,password}=req.body
     if(!email||!password){
-        return res.status(400).json({message:"Email and password are required"})
+        return res.status(400).json({message:"Email and password are required",success:false})
     }else{
         let buyer = await Buyer.findOne({email:email})
         if(!buyer){
-            return res.status(400).json({message:"Invalid email"})
+            return res.status(400).json({message:"Invalid email",success:false})
         }else{
             let isValidPassword =await bycrypt.compare(password,buyer.password)
             if(!isValidPassword){
-                return res.status(400).json({message:"Invalid Password"})
+                return res.status(400).json({message:"Invalid Password",success:false})
             }else{
                 delete buyer._doc.password
 
@@ -32,7 +32,7 @@ module.exports.login=async(req,res)=> {
     }
 
    }catch(err){
-      return res.status(500).json({message:"Internal Server Error",status:false});
+      return res.status(500).json({message:"Internal Server Error",success:false});
    }
 }
 
@@ -43,16 +43,16 @@ module.exports.Register=async(req,res)=> {
         return res.status(400).json({message:"Please fill all fields",status:false});
         }else if (password !== cpassword){
             return res.status(400).json({
-                message:"Password and Confirm password are not same",status:false
+                message:"Password and Confirm password are not same",success:false
             });
         }else {
             let buyer = await Buyer.find({$or: [{ email: email }, { phone: phone }]});
             if(buyer.length > 0){
-                return res.status(400).json({message:"Email or phone already exist",status:false});
+                return res.status(400).json({message:"Email or phone already exist",success:false});
             }else{
                 let hasshedPassword = await bycrypt.hash(password,10)
                 if(phone.length!==10){
-                    return res.status(400).json({message:"Invalid Phone Number",status:false});
+                    return res.status(400).json({message:"Invalid Phone Number",success:false});
                 }
                 let newBuyer = await Buyer.create({
                     name:name,
@@ -61,11 +61,11 @@ module.exports.Register=async(req,res)=> {
                     phone:phone
                 })
                 delete newBuyer._doc.password
-                return res.status(201).json({message:"Buyer Registration Successfully",status:true,newBuyer});
+                return res.status(201).json({message:"Buyer Registration Successfully",success:true,newBuyer});
             }
         }
     }catch (err){
-        return res.status(500).json({message:"Internal Server Error",status:false});
+        return res.status(500).json({message:"Internal Server Error",success:false});
     }
     }
 
