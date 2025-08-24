@@ -27,7 +27,7 @@ module.exports.login=async(req,res)=> {
                     type:"seller"
                 }
                 let token = jwt.sign(payload,process.env.JWT_SECRET,{expiresIn:'1h'})
-                return res.status(200).json({message:"Login successful",success:true,token:token})
+                return res.status(200).json({message:"Login successful",success:true,token:token,seller:seller})
             }
         }
     }
