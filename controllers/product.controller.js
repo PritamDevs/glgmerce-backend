@@ -1,5 +1,7 @@
+const mongoose =require('mongoose')
 let Product = require("../models/product.model")
-
+const bycrypt=require('bcrypt')
+const jwt=require('jsonwebtoken')
 module.exports.createProduct = async(req,res)=>{
     try {
         let{name,price,description,category,brand,size}=req.body;
