@@ -4,6 +4,8 @@ let jwt=require('jsonwebtoken')
 module.exports.auth=(types)=> async(req,res,next)=>{
     try {
         let token=req.header('Authorization')
+        // console.log(req.headers);
+       
         if(!token) return res.status(401).send({message:'Access denied.No token provided.',success:false});
 
         let decoded = jwt.verify(token,process.env.JWT_SECRET)
@@ -11,6 +13,9 @@ module.exports.auth=(types)=> async(req,res,next)=>{
         if(!types.includes(decoded.type)){
             return res.status(401).send({message:'Access denied.You do not have permission to access this resource.',success:false});
         }
+
+        req.user=decoded;
+        
         next()
     } catch (error) {
         console.log(error);

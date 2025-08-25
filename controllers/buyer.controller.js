@@ -69,7 +69,17 @@ module.exports.Register=async(req,res)=> {
     }
     }
 
-   
+
+    module.exports.Profile=async (req,res)=>{
+        const bId=req.user.id
+        try {
+            let data=await Buyer.findById(bId)
+            delete data._doc.password
+            return res.send({message:"buyer profile",success:true,data})
+        } catch (error) {
+             return res.status(500).json({message:"Internal Server Error",success:false});
+        }
+    }
 
 
 // module.exports={
