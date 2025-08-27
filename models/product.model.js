@@ -27,5 +27,6 @@ let productSchema=new Schema({
         type:String,
         required:true,
     },
+    sellerId: { type: mongoose.Schema.Types.ObjectId, ref: "Seller", required: true } 
 })
 module.exports = mongoose.model('Product',productSchema);

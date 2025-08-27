@@ -14,7 +14,8 @@ module.exports.createProduct = async(req,res)=>{
                 description:description,
                 category:category,
                 brand:brand,
-                size:size
+                size:size,
+                sellerId: req.user.id 
             });
             return res.status(201).json({message:"Product created successfully",success:true,product:newProduct});
         }
@@ -35,11 +36,20 @@ module.exports.AllProduct = async(req,res)=>{
 module.exports.DeleteProduct = async(req,res)=>{
     try {
         let id = req.params.id;
-        let product = await Product.findByIdAndDelete(id);
+        let product = await Product.findById(id);
+        if (!product) {
+        return res.status(404).json({ message: "Product not found", success: false });
+    }
+
+        if (product.sellerId.toString() !== req.user.id) {
+        return res.status(403).json({ message: "You can only delete your own products", success: false });
+    }
+        await Product.findByIdAndDelete(id);
+
         return res.status(200).json({message:"Product deleted successfully",success:true});
         
     } catch (error) {
-        
+        return res.status(500).json({ message: "Internal Server Error", success: false });
     }
 
 }
