@@ -19,6 +19,8 @@ let sellerRoute = require('./routes/seller.route')
 app.use('/api/seller',sellerRoute)
 let productRoute = require('./routes/product.route')
 app.use('/api/product',productRoute)
+let cartRoute = require("./routes/cart.route");
+app.use("/api/cart", cartRoute);
 
 connectDB()
 .then(()=>{

@@ -8,5 +8,4 @@ router.post('/register',Register)
 router.get('/profile',auth(['seller']),Profile)
 
 
-
 module.exports= router

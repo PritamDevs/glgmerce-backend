@@ -23,7 +23,7 @@ module.exports.login=async(req,res)=> {
                     name:seller.name,
                     email:seller.email,
                     phone:seller.phone,
-                    id:seller._id,
+                    _id:seller._id,
                     type:"seller"
                 }
                 let token = jwt.sign(payload,process.env.JWT_SECRET,{expiresIn:'1h'})
